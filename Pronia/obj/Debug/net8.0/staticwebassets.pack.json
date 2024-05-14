@@ -3225,8 +3225,24 @@
       "PackagePath": "staticwebassets\\assets\\js\\vendor\\modernizr-3.11.2.min.js"
     },
     {
-      "Id": "C:\\Users\\Hp\\OneDrive\\Desktop\\Pronia\\Pronia\\wwwroot\\images\\products\\xfifx10b.wed",
-      "PackagePath": "staticwebassets\\images\\products\\xfifx10b.wed"
+      "Id": "C:\\Users\\Hp\\OneDrive\\Desktop\\Pronia\\Pronia\\wwwroot\\imgs\\products\\2tnjfbch.100.avif",
+      "PackagePath": "staticwebassets\\imgs\\products\\2tnjfbch.100.avif"
+    },
+    {
+      "Id": "C:\\Users\\Hp\\OneDrive\\Desktop\\Pronia\\Pronia\\wwwroot\\imgs\\products\\dgkg0ufu.5jv.jpg",
+      "PackagePath": "staticwebassets\\imgs\\products\\dgkg0ufu.5jv.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Hp\\OneDrive\\Desktop\\Pronia\\Pronia\\wwwroot\\imgs\\products\\lh0pqae2.2ss.jpg",
+      "PackagePath": "staticwebassets\\imgs\\products\\lh0pqae2.2ss.jpg"
+    },
+    {
+      "Id": "C:\\Users\\Hp\\OneDrive\\Desktop\\Pronia\\Pronia\\wwwroot\\imgs\\products\\xfifx10b.wed",
+      "PackagePath": "staticwebassets\\imgs\\products\\xfifx10b.wed"
+    },
+    {
+      "Id": "C:\\Users\\Hp\\OneDrive\\Desktop\\Pronia\\Pronia\\wwwroot\\imgs\\products\\zx5pqiq5.qvr.jpg",
+      "PackagePath": "staticwebassets\\imgs\\products\\zx5pqiq5.qvr.jpg"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Pronia.Microsoft.AspNetCore.StaticWebAssets.props",

@@ -12,7 +12,7 @@ namespace Pronia.Models
         public int StockCount { get; set; }
         public string ImageUrl { get; set; }
         public float Raiting { get; set; }
-        public ICollection<ProductImage>? PrductImages { get; set;}
+        public ICollection<ProductImage>? Images { get; set;}
         public ICollection<ProductCategory>? ProductCategories { get; set; }
 
     }

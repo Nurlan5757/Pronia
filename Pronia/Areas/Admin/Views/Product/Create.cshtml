@@ -4,7 +4,7 @@
 }
 
 @model CreateProductVM
-
+@ViewBag.Categories
 <form method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label asp-for="Name"></label>
@@ -36,16 +36,23 @@
         <input asp-for="Raiting" class="form-control">
         <span asp-validation-for="Raiting" class="text-danger"></span>
     </div>
+    <select asp-for="CategoryIds" class="form-control">
+        @foreach (var item in ViewBag.Categories)
+        {
+            <option value="@item.Id">@item.Name</option>
+        }
+    </select>
+
     <div class="mb-3">
         <label asp-for="ImageFile"></label>
         <input asp-for="ImageFile" accept="image/*" class="form-control">
         <span asp-validation-for="ImageFile" class="text-danger"></span>
     </div>   
-   @*  <div class="mb-3">
+    <div class="mb-3">
         <label asp-for="ImageFiles"></label>
         <input asp-for="ImageFiles" class="form-control">
         <span asp-validation-for="ImageFiles" class="text-danger"></span>
-    </div> *@
+    </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
