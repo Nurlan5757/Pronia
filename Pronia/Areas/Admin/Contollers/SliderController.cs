@@ -14,13 +14,18 @@ namespace Pronia.Areas.Admin.Contollers
         {
             var data = await _context.Sliders
                
-               .Select(s => new GetSliderVM
+               .Select(s => new GetSliderAdminVM
                {
                    Discount = s.Discount,
                    Id = s.Id,
                    ImageUrl = s.ImageUrl,
                    Subtitle = s.Subtitle,
                    Title = s.Title,
+                   IsDeleted = s.IsDeleted,
+                   CreatedTime = s.CreatedTime.ToString("dd MMM yyyy HH:mm:ss"),
+                   UpdatedTime = s.UpdatedTime.Year > 1 ? s.UpdatedTime.ToString("dd MMM yyyy") : ""
+               
+
                }).ToListAsync();
             return View(data);
         }
@@ -38,10 +43,8 @@ namespace Pronia.Areas.Admin.Contollers
             }
             Slider slider = new Slider
             {
-                Discount = vm.Discount,
-                CreatedTime = DateTime.Now,
-                ImageUrl = vm.ImageUrl,
-                IsDeleted = false,
+                Discount = vm.Discount,              
+                ImageUrl = vm.ImageUrl,               
                 Subtitle = vm.Subtitle,
                 Title = vm.Title,
             };
@@ -91,6 +94,13 @@ namespace Pronia.Areas.Admin.Contollers
             _context.Sliders.Remove(ds);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+        public async Task<IActionResult>  ChangeVisiblity(int id)
+        {
+            var data= await _context.Sliders.FindAsync(id);
+            if (data == null) return BadRequest();
+            data.IsDeleted = !data.IsDeleted;
+            return Ok();
         }
     }
 }

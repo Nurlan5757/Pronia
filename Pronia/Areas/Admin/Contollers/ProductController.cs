@@ -15,20 +15,23 @@ namespace Pronia.Areas.Admin.Contollers
     {
         public async Task<IActionResult> Index()
         {
-      
+
             return View(await _context.Product
-                .Select(p=> new GetProductAdminVM
+                .Select(p => new GetProductAdminVM
                 {
-                  CostPrice = p.CostPrice, 
-                  Discount = p.Discount,
-                  Id = p.Id,
-                  ImageUrl = p.ImageUrl,
-                  Name = p.Name,    
-                  Raiting = p.Raiting,
-                  SellPrice = p.SellPrice,
-                  StockCount = p.StockCount,
+                    CostPrice = p.CostPrice,
+                    Discount = p.Discount,
+                    Id = p.Id,
+                    ImageUrl = p.ImageUrl,
+                    Name = p.Name,
+                    Raiting = p.Raiting,
+                    SellPrice = p.SellPrice,
+                    StockCount = p.StockCount,
+                    Categories = p.ProductCategories.Select(pc => pc.Category.Name).Bind(','),
+                    CreatedTime = p.CreatedTime.ToString("dd MMM ddd yyyy"),
+                    UpdatedTime = p.UpdatedTime.Year > 1 ? p.UpdatedTime.ToString("dd MMM ddd yyyy")  :""
                 })
-                .ToListAsync());
+                .ToListAsync()) ;
         }
         public async Task<IActionResult> Create()
         {
@@ -51,7 +54,7 @@ namespace Pronia.Areas.Admin.Contollers
             bool isImageValid = true;
             StringBuilder sb = new StringBuilder();
             
-            foreach(var img in data.ImageFiles)
+            foreach(var img in data.ImageFiles ?? new List<IFormFile>())
             {
 
                 if (!img.IsValidType("image")) 
@@ -72,14 +75,23 @@ namespace Pronia.Areas.Admin.Contollers
 
             }
             if (!isImageValid)
-            {
-               
+            {             
                 ModelState.AddModelError("ImageFiles",sb.ToString());
             }
+            if (await _context.Categories.CountAsync(c=>data.CategoryIds.Contains(c.Id)) != data.CategoryIds.Length)
+            {
+                ModelState.AddModelError("CategoryIds", "kateqorya tapilmadi");
+            }
 
-            if(!ModelState.IsValid)           
+            if(!ModelState.IsValid)
+            {
+                ViewBag.Categories = await _context.Categories
+                .Where(s => !s.IsDeleted)
+                .ToListAsync();
                 return View(data);
-
+            }         
+               
+            
             string fileName = await data.ImageFile.SaveFileAsync(Path.Combine(_env.WebRootPath,"imgs", "products"));
             Product prod = new Product
             {
@@ -92,7 +104,12 @@ namespace Pronia.Areas.Admin.Contollers
                 Raiting = data.Raiting,
                 SellPrice = data.SellPrice,
                 StockCount = data.StockCount,
-                Images = new List<ProductImage>()
+                Images = new List<ProductImage>(),
+                ProductCategories = data.CategoryIds.Select(x=>new ProductCategory
+                {
+                    CategoryId = x
+                }).ToList()
+
             };
             foreach (var img in data.ImageFiles)
             {
